@@ -1,15 +1,15 @@
 -- department table
-INSERT INTO department (dept) VALUES ('Front of House');
-INSERT INTO department (dept) VALUES ('Back of House');
-INSERT INTO department (dept) VALUES ('Manager');
-INSERT INTO department (dept) VALUES ('Sales');
+INSERT INTO department (department) VALUES ('Front of House');
+INSERT INTO department (department) VALUES ('Back of House');
+INSERT INTO department (department) VALUES ('Manager');
+INSERT INTO department (department) VALUES ('Sales');
 
 -- role table
-INSERT INTO role (title, salary, department_id) VALUES ('Waiter', 56000, 1);
-INSERT INTO role (title, salary, department_id)  VALUES ('Chef', 65000, 2);
-INSERT INTO role (title, salary, department_id)  VALUES ('Head Chef', 120000, 3);
-INSERT INTO role (title, salary, department_id)  VALUES ('Accountant', 85000, 4);
-INSERT INTO role (title, salary, department_id)  VALUES ('General Manager', 120000, 3);
+INSERT INTO roles (title, salary, department_id) VALUES ('Waiter', 56000, 1);
+INSERT INTO roles (title, salary, department_id)  VALUES ('Chef', 65000, 2);
+INSERT INTO roles (title, salary, department_id)  VALUES ('Head Chef', 120000, 3);
+INSERT INTO roles (title, salary, department_id)  VALUES ('Accountant', 85000, 4);
+INSERT INTO roles (title, salary, department_id)  VALUES ('General Manager', 120000, 3);
 
 -- employee table
 INSERT INTO employee (first_name, last_name, role_id) values ('Santiago', 'Aristizabal', 3);
