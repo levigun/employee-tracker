@@ -164,10 +164,10 @@ async function editRole() {
             type: "list",
             name: "role",
             message: "Select the employee's new role",
-            choices: roles.map((row) => ({ name: row.title, value: row.id })),
+            choices: role.map((row) => ({ name: row.title, value: row.id })),
         },
     ])
-    connection.query(`UPDATE employee SET role_id = ${role} WHERE id = ${employee}`),
+    connection.query(`UPDATE employee SET role_id = ${roles} WHERE id = ${employee}`),
 
         function (err, res) {
             if (err) throw err;
