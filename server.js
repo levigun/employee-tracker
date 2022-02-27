@@ -3,9 +3,11 @@ const inquirer = require('inquirer');
 const console_table = require('console.table');
 const questions = require('./lib/questions');
 
-
+// called out function init at the beginning of the page
 init();
 
+
+// created function init
 async function init() {
     const { action } = await inquirer.prompt(questions);
     switch (action) {
@@ -117,12 +119,12 @@ async function addRole() {
     const department = await connection.query(
         "SELECT dept, id FROM department"
     )
-    const { department, title, salary } = await inquirer.prompt([
+    const { departments, title, salary } = await inquirer.prompt([
         {
             type: "list",
             name: "department",
             message: "WHich department is this role in?",
-            choices: department.map((row) => ({ name: row.department, value: row.id }))
+            choices: departments.map((row) => ({ name: row.department, value: row.id }))
         },
         {
             type: "input",
@@ -149,12 +151,12 @@ async function editRole() {
         "SELECT first_name, last_name, id FROM employee ")
     const roles = await connection.query(
         "SELECT id, title, salary FROM roles ")
-    const { employee, role } = await inquirer.prompt([
+    const { employees, role } = await inquirer.prompt([
         {
             type: "list",
             name: "employee",
             message: "Select which employee you want to update its role",
-            choices: employee.map((employee) => ({
+            choices: employees.map((employee) => ({
                 name: employee.first_name + " " + employee.last_name, value: employee.id
             })),
         },
