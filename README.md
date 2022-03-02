@@ -28,7 +28,7 @@ To use this command-line application, follow the instructions below:
 1. Git clone https://github.com/levigun/employee-tracker.git . 
 2. Open the file in visual studio code.
 3. Open the intergrated terminal of the db folder and run "mysql -u root -p".
-4. Then type the following commands in consecutive order: "source schema.sql", "source seed.sql". "use employee_db".
+4. Then type the following commands in consecutive order: "source schema.sql", "source seed.sql", "use employee_db".
 5. Open the integrated terminal of the employer tracker folder and type "npm i".
 6. Then type the command "npm start"
 7. A series of prompted questions will show and you just need to answer according to your usage.
