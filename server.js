@@ -56,7 +56,6 @@ async function addDepartment() {
 
     const connection = await connect();
 
-    console.log(connection);
     const input = department.department;
 
     connection.execute("INSERT INTO  department SET `department` = ?",
@@ -83,7 +82,6 @@ async function delDepartment() {
             })
         },
     ]);
-    console.log(input)
 
     const delDept = input.del_department;
     connection.execute(`DELETE FROM department WHERE id = ${delDept};`)
@@ -100,13 +98,16 @@ async function updateRoles() {
         type: "list",
         name: "roles",
         message: "Choose one of the following updates:",
-        choices: ["Add Role", "Edit Role", "Exit"]
+        choices: ["Add Role", "Delete Role", "Edit Role", "Exit"]
     })
     if (roles === "Add Role") {
         return addRole();
     }
     if (roles === "Edit Role") {
         return editRole();
+    }
+    if (roles === "Delete Role") {
+        return delRoles();
     }
     if (roles === "Exit") {
         return init();
@@ -118,7 +119,6 @@ async function addRole() {
     const [departments] = await connection.query(
         "SELECT * FROM department"
     )
-    console.log(departments);
     const input = await inquirer.prompt([
         {
             type: "list",
@@ -137,16 +137,44 @@ async function addRole() {
             message: "What is the salary for this role?"
         },
     ])
+
     const title = input.title;
     const salary = input.salary;
-    const departmentId = input.department;
-    await connection.execute(`INSERT INTO roles (title, salary, department_id) VALUES (${title}, ${salary}, ${departmentId})`)
+    const deptId = input.department;
+
+    connection.query(
+        `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [title, salary, deptId])
 
         .then(function () {
             init();
         })
 
 };
+
+async function delRoles() {
+    const connection = await connect();
+    const [roles] = await connection.query("SELECT * FROM roles")
+
+    const input = await inquirer.prompt([
+        {
+            type: "list",
+            name: "removedRoles",
+            message: "Which role would you like to delete?",
+            choices: roles.map((role) => ({
+                name: role.title, value: role.id
+            })),
+        },
+    ]);
+
+    connection.query(
+        "DELETE FROM roles WHERE id = ?", input.removedRoles)
+
+
+        .then(function () {
+            init();
+        })
+
+}
 
 async function editRole() {
     const connection = await connect();
@@ -231,18 +259,25 @@ async function addEmployee() {
             message: "Who is the manager?",
             choices: [
                 { name: 'No manager', value: null },
-                ...employees.map((employee) => ({ name: `${employee.first_name} ${employee.last_name}`, value: roles.department_id }))]
+                ...employees.map((employee) => ({ name: `${employee.first_name} ${employee.last_name}`, value: employee.id }))]
         },
     ]);
 
-    connection.query(
-        "INSERT INTO employee SET ?",
-        {
-            first_name: newEmployee.firstName,
-            last_name: newEmployee.lastName,
-            role_id: newEmployee.roleID,
-            manager_id: newEmployee.managerID,
-        })
+    console.log(newEmployee);
+
+    const name1 = newEmployee.firstName;
+    const name2 = newEmployee.lastName;
+    const IdOfRole = newEmployee.roleID;
+    const IdOfManager = newEmployee.managerID;
+
+    connection.query(`INSERT INTO employee SET ?`, 
+       {
+        first_name: name1,
+        last_name: name2,
+        role_id: IdOfRole,
+        manager_id: IdOfManager
+       }
+    )
 
         .then(function () {
             init();
@@ -264,7 +299,7 @@ async function delEmployee() {
         },
     ]);
 
-    console.log(employees);
+
 
     connection.query(
         "DELETE FROM employee WHERE id = ?", input.removedEmployee)
@@ -291,11 +326,11 @@ async function viewInfo() {
     let query;
 
     if (view === "Department") {
-        query = `SELECT department FROM department`;
+        query = `SELECT * FROM department`;
     } else if (view === "Roles") {
-        query = `SELECT roles.title, roles.department_id, department.department FROM roles INNER JOIN department ON roles.department_id = department.id`
+        query = `SELECT * FROM roles`
     } else {
-        query = `SELECT employee.first_name, employee.last_name, roles.title, roles.salary, department.department FROM ((employee INNER JOIN roles ON employee.role_id = roles.id) INNER JOIN department ON roles.department_id = department.id) ORDER BY department`;
+        query = `SELECT * FROM employee`;
 
     }
 
