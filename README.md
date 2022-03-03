@@ -13,7 +13,7 @@ THEN I am presented with the following options: update department, update roles,
 WHEN I choose update department
 THEN I am able to add or delete a department and it will be updated to the database
 WHEN I choose update roles
-THEN I am able to add or edit a certain role and it will be updated to the database
+THEN I am able to add or delete a certain role and edit an employee's role and it will be updated to the database
 WHEN I choose update employee
 THEN I am able to add or delete an employee and it will be updated to the database
 WHEN I choose view information
@@ -26,14 +26,25 @@ THEN I can choose which table I want to see
 To use this command-line application, follow the instructions below:
 
 1. Git clone https://github.com/levigun/employee-tracker.git . 
+
 2. Open the file in visual studio code.
+
 3. Open the intergrated terminal of the db folder and run "mysql -u root -p".
+
 4. Then type the following commands in consecutive order: "source schema.sql", "source seed.sql", "use employee_db".
+
 5. Open the integrated terminal of the employer tracker folder and type "npm i".
+
 6. Then type the command "npm start"
+
 7. A series of prompted questions will show and you just need to answer according to your usage.
 
-## Table Look
+
+## Video Walkthrough
+
+Video link:
+
+https://drive.google.com/file/d/1om_Ut-glezYdU1d2uPuWVBEeXl4vVgpI/view?usp=sharing
 
 ## Reference
 
